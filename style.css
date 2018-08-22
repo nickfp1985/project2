@@ -1,0 +1,22 @@
+.row1 {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+#chatbox {
+    border: 1px solid #ced4da;
+    height: 400px;
+    margin: 10px;
+}
+
+#usersbox {
+    border: 1px solid #ced4da;
+    height: 400px;
+    margin: 10px 10px;
+}
+
+.submit-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
