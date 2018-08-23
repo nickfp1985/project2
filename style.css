@@ -13,10 +13,17 @@
     border: 1px solid #ced4da;
     height: 400px;
     margin: 10px 10px;
+    /* text-align: center; */
 }
 
 .submit-row {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.night {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }
