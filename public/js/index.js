@@ -14,8 +14,13 @@ $(document).ready(function() {
     getMessages();
   }); 
 
-//Grab user name on login page (maybe use css to make it hidden on chat.html page if need be)
- let username = $("#username").text();
+//Grab user name on login page and store it using localStorage (maybe use css to make it hidden on chat.html page if need be)
+let username = $("#username").val().trim();
+$("#loginSubmit").on("click", function() {
+    localStorage.clear();
+    localStorage.setItem("username", username);
+  });
+
 });
 // // Get references to page elements
 // var $exampleText = $("#example-text");
