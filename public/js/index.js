@@ -1,13 +1,21 @@
 $(document).ready(function() {
+//Utils
+ function getMessages(){
+   $.ajax({
+    url: "/api/message",
+    type: "GET"
+  }).then(function(res) {
+    $("sentMessages").html().append(`${res}`);
+  });
+ }
+
   //GET all messages when user clicks send
   $("#sendMessage").on("click", function() {
-    $.ajax({
-      url: "/api/message",
-      type: "GET"
-    }).then(function(res) {
-      $("sentMessages").html().append(`${res}`);
-    });
-  });
+    getMessages();
+  }); 
+
+//Grab user name on login page (maybe use css to make it hidden on chat.html page if need be)
+ let username = $("#username").text();
 });
 // // Get references to page elements
 // var $exampleText = $("#example-text");
