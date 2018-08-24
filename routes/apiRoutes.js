@@ -2,23 +2,32 @@ var db = require("../models");
 
 module.exports = function(app) {
   // Get all examples
-  app.get("/api/examples", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.json(dbExamples);
+  app.get("/api/message", function(req, res) {
+
+    let msgQuery = {};
+
+    db.Message.findAll({
+      where: msgQuery
+    }).then(function(chitchat) {
+      res.json.(chitchat);
     });
+
   });
 
   // Create a new example
-  app.post("/api/examples", function(req, res) {
-    db.Example.create(req.body).then(function(dbExample) {
-      res.json(dbExample);
+  app.post("/api/message", function(req, res) {
+    db.Message.create(req.body).then(function(chitchat) {
+      res.json(chitchat);
     });
   });
 
   // Delete an example by id
-  app.delete("/api/examples/:id", function(req, res) {
-    db.Example.destroy({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.json(dbExample);
-    });
-  });
+  // app.delete("/api/examples/:id", function(req, res) {
+    
+  //   });
+  // });
 };
+
+// POSSIBLE ADDITIONS
+//
+// show chats from a specific user
