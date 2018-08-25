@@ -1,3 +1,2 @@
 CREATE DATABASE chitchat;
 
-

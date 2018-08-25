@@ -12,9 +12,7 @@ var PORT = process.env.PORT || 8080;
 // Requiring our models for syncing
 var db = require("./models");
 
-
 //******** Middleware
-
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -27,7 +25,7 @@ app.use(express.static("public"));
 
 // Routes
 require("./routes/html-routes")(app);
-require("./routes/post-api-routes")(app);
+require("./routes/message-api-routes")(app);
 require("./routes/user-api-routes")(app);
 
 // var syncOptions = { force: false };
