@@ -21,6 +21,10 @@ $("#loginSubmit").on("click", function() {
     localStorage.setItem("username", username);
   });
 
+$('#guest').on('click', function(){
+  username = "anonymous";
+});
+
 });
 // // Get references to page elements
 // var $exampleText = $("#example-text");
