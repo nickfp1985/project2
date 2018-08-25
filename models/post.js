@@ -1,6 +1,6 @@
 module.exports = function(sequelize, DataTypes) {
 
-  let Message = sequelize.define("Message", {
+  let Post = sequelize.define("Post", {
     username: {
       type: DataTypes.STRING,
       validate: {
@@ -15,5 +15,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-  return Message;
+  return Post;
 };
