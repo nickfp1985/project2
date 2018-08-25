@@ -5,13 +5,14 @@ $(document).ready(function() {
     url: "/api/message",
     type: "GET"
   }).then(function(res) {
-    $("sentMessages").html().append(`${res}`);
+    $("sentMessages").html().append(`<p>${res}</p>`);
   });
  }
 
   //GET all messages when user clicks send
   $("#sendMessage").on("click", function() {
     getMessages();
+    $("#sendMessage").clear();
   }); 
 
 //Grab user name on login page and store it using localStorage (maybe use css to make it hidden on chat.html page if need be)
@@ -26,8 +27,22 @@ $("#loginSubmit").on("click", function() {
 $('#guest').on('click', function(){
   let number = Math.floor((Math.random() * 9999) + 1)
   username = "anonymous" + number;
+  $.ajax({
+    url: '/',
+    type: "GET"
+  }).then(function(){
+    window.location.href = "/chat";
+  });
 });
 
+$("#home").on('click', function(){
+  $.ajax({
+    url: '/',
+    type: "GET"
+  }).then(function(){
+    window.location.href = "/";
+  });
+});
 
 });
 // // Get references to page elements
