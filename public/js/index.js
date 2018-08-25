@@ -2,16 +2,25 @@ $(document).ready(function() {
 //Utils
  function getMessages(){
    $.ajax({
-    url: "/api/message",
+    url: "/api/post",
     type: "GET"
   }).then(function(res) {
-    $("sentMessages").html().append(`<p>${res}</p>`);
+    $("#sentMessages").html().append(`<p>${res}</p>`);
   });
  }
 
+ function getUsers(){
+  $.ajax({
+   url: "/api/users",
+   type: "GET"
+ }).then(function(res) {
+   $("#activeUsers").html().append(`<li>${res}</li>`);
+ });
+}
   //GET all messages when user clicks send
   $("#sendMessage").on("click", function() {
     getMessages();
+    getUsers();
     $("#sendMessage").clear();
   }); 
 
