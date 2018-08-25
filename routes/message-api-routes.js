@@ -9,7 +9,7 @@ module.exports = function(app) {
     db.Message.findAll({
       where: msgQuery
     }).then(function(chitchat) {
-      res.json.(chitchat);
+      res.json(chitchat);
     });
 
   });
