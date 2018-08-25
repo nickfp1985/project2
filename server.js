@@ -7,7 +7,7 @@ var bodyParser = require("body-parser");
 // Sets up the Express App
 // =============================================================
 var app = express();
-var PORT = process.env.PORT || 3000;
+var PORT = process.env.PORT || 8080;
 
 // Requiring our models for syncing
 var db = require("./models");
@@ -26,10 +26,11 @@ app.use(express.static("public"));
 
 
 // Routes
-require("./routes/apiRoutes")(app);
+require("./routes/html-routes")(app);
+require("./routes/post-api-routes")(app);
+require("./routes/user-api-routes")(app);
 
-var syncOptions = { force: false };
-
+// var syncOptions = { force: false };
 // If running a test, set syncOptions.force to true
 // clearing the `testdb`
 // if (process.env.NODE_ENV === "test") {
@@ -43,12 +44,3 @@ db.sequelize.sync({ force: true }).then(function() {
     console.log("App listening on PORT " + PORT);
   });
 });
-
-// Syncing our sequelize models and then starting our Express app
-// =============================================================
-db.sequelize.sync({ force: true }).then(function() {
-  app.listen(PORT, function() {
-    console.log("App listening on PORT " + PORT);
-  });
-});
-
