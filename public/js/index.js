@@ -14,7 +14,10 @@ $(document).ready(function() {
    url: "/api/users",
    type: "GET"
  }).then(function(res) {
-   $("#activeUsers").html().append(`<li>${res}</li>`);
+   let id = res.id;
+   res.forEach(users => {
+    $("#activeUsers").html().append(`<li>${users.name} <button class="btn btn-danger delete-user" id="${users.id}">x</button></li>`);
+   });
  });
 }
   //GET all messages when user clicks send
@@ -44,6 +47,7 @@ $('#guest').on('click', function(){
   });
 });
 
+//Goes to index.html
 $("#home").on('click', function(){
   $.ajax({
     url: '/',
@@ -51,6 +55,12 @@ $("#home").on('click', function(){
   }).then(function(){
     window.location.href = "/";
   });
+});
+
+//Deletes User(s) Possible candidate for removal
+$(".delete-user").on("click", function(){
+  let id = $(this).attr("id");
+  $(this).parent().remove();
 });
 
 });
