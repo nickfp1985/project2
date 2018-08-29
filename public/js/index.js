@@ -31,11 +31,30 @@ function postMessage(){
 
   })
 }
+
+function postUser(){
+  let userName = $("#newUsername").val().trim();
+  let passWord = $("#newUserPassword").val().trim();
+  let user = {
+    username: userName,
+    password: passWord 
+  };
+
+  $.ajax({
+    url: "/app/users",
+    type: "POST",
+    data: user
+  }).then(function(res){
+
+  });
+}
+
   //GET all messages when user clicks send
-  $("#sendMessage").on("click", function() {
+  $("#send").on("click", function() {
     getMessages();
     getUsers();
-    $("#sendMessage").clear();
+    postMessage();
+    $("#message").clear();
   }); 
 
 //Grab user name on login page and store it using localStorage (maybe use css to make it hidden on chat.html page if need be)
@@ -72,6 +91,12 @@ $("#home").on('click', function(){
 $(".delete-user").on("click", function(){
   let id = $(this).attr("id");
   $(this).parent().remove();
+});
+
+//Create New User
+$("#createNewUser").on("click", function(){
+  postUser();
+  window.location.href = "/login";
 });
 
 });
