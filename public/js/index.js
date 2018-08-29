@@ -41,7 +41,7 @@ function postUser(){
   };
 
   $.ajax({
-    url: "/app/users",
+    url: "/api/users",
     type: "POST",
     data: user
   }).then(function(res){
