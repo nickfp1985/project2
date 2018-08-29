@@ -2,16 +2,40 @@ $(document).ready(function() {
 //Utils
  function getMessages(){
    $.ajax({
-    url: "/api/message",
+    url: "/api/messages",
     type: "GET"
   }).then(function(res) {
-    $("sentMessages").html().append(`${res}`);
+    $("#sentMessages").html().append(`<p>${res.text}</p>`);
   });
  }
 
+ function getUsers(){
+  $.ajax({
+   url: "/api/users",
+   type: "GET"
+ }).then(function(res) {
+   let id = res.id;
+   res.forEach(users => {
+    $("#activeUsers").html().append(`<li>${users.name} <button class="btn btn-danger delete-user" id="${users.id}">x</button></li>`);
+   });
+ });
+}
+
+function postMessage(){
+  let message = $("#message").val();
+  $.ajax({
+    url: "/api/message",
+    type: "POST",
+    data: message
+  }).then(function(res){
+
+  })
+}
   //GET all messages when user clicks send
   $("#sendMessage").on("click", function() {
     getMessages();
+    getUsers();
+    $("#sendMessage").clear();
   }); 
 
 //Grab user name on login page and store it using localStorage (maybe use css to make it hidden on chat.html page if need be)
@@ -26,8 +50,29 @@ $("#loginSubmit").on("click", function() {
 $('#guest').on('click', function(){
   let number = Math.floor((Math.random() * 9999) + 1)
   username = "anonymous" + number;
+  $.ajax({
+    url: '/',
+    type: "GET"
+  }).then(function(){
+    window.location.href = "/chat";
+  });
 });
 
+//Goes to index.html
+$("#home").on('click', function(){
+  $.ajax({
+    url: '/',
+    type: "GET"
+  }).then(function(){
+    window.location.href = "/";
+  });
+});
+
+//Deletes User(s) Possible candidate for removal
+$(".delete-user").on("click", function(){
+  let id = $(this).attr("id");
+  $(this).parent().remove();
+});
 
 });
 // // Get references to page elements

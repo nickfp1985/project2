@@ -25,5 +25,4 @@ module.exports = function(app) {
   app.get("/newUser", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/newUser.html"));
   });
-
 };
