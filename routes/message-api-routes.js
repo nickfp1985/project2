@@ -2,21 +2,21 @@ var db = require("../models");
 
 module.exports = function(app) {
   // Get all examples
-  app.get("/api/post", function(req, res) {
+  app.get("/api/messages", function(req, res) {
 
-    let postQuery = {};
+    let msgQuery = {};
 
-    db.Post.findAll({
-      where: postQuery
+    db.Message.findAll({
+      where: msgQuery
     }).then(function(chitchat) {
-      res.json.(chitchat);
+      res.json(chitchat);
     });
 
   });
 
   // Create a new example
-  app.post("/api/post", function(req, res) {
-    db.Post.create(req.body).then(function(chitchat) {
+  app.post("/api/message", function(req, res) {
+    db.Message.create(req.body).then(function(chitchat) {
       res.json(chitchat);
     });
   });
