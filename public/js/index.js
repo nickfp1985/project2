@@ -2,10 +2,10 @@ $(document).ready(function() {
 //Utils
  function getMessages(){
    $.ajax({
-    url: "/api/post",
+    url: "/api/messages",
     type: "GET"
   }).then(function(res) {
-    $("#sentMessages").html().append(`<p>${res}</p>`);
+    $("#sentMessages").html().append(`<p>${res.text}</p>`);
   });
  }
 
@@ -19,6 +19,17 @@ $(document).ready(function() {
     $("#activeUsers").html().append(`<li>${users.name} <button class="btn btn-danger delete-user" id="${users.id}">x</button></li>`);
    });
  });
+}
+
+function postMessage(){
+  let message = $("#message").val();
+  $.ajax({
+    url: "/api/message",
+    type: "POST",
+    data: message
+  }).then(function(res){
+
+  })
 }
   //GET all messages when user clicks send
   $("#sendMessage").on("click", function() {
