@@ -7,8 +7,16 @@ module.exports = function(app) {
   // Each of the below routes just handles the HTML page that the user gets sent to.
 
   // index route loads index.html
-  app.get("/", function(req, res) {
+  app.get("/index", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/index.html"));
+  });
+
+  app.get("/indexJs", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/js/index.js"));
+  });
+
+  app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/styles/style.css"));
   });
 
   // login route loads login.html
@@ -26,3 +34,4 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/newUser.html"));
   });
 };
+
