@@ -15,8 +15,16 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/js/index.js"));
   });
 
-  app.get("/", function(req, res) {
+  app.get("/style", function(req, res) {
     res.sendFile(path.join(__dirname, "../public/styles/style.css"));
+  });
+
+  app.get("/darkly", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/styles/darkly.css"));
+  });
+
+  app.get("/flatly", function(req, res) {
+    res.sendFile(path.join(__dirname, "../public/styles/flatly.css"));
   });
 
   // login route loads login.html
@@ -34,4 +42,3 @@ module.exports = function(app) {
     res.sendFile(path.join(__dirname, "../public/newUser.html"));
   });
 };
-
