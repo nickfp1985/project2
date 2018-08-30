@@ -33,19 +33,18 @@ function postMessage(){
 }
 
 function postUser(){
-  let userName = $("#newUsername").val().trim();
-  let passWord = $("#newUserPassword").val().trim();
-  let user = {
-    username: userName,
-    password: passWord 
-  };
+  let userName = $("#newUserName").val();
+  let passWord = $("#newUserPassword").val();
 
   $.ajax({
     url: "/api/users",
     type: "POST",
-    data: user
+    data: {
+      username: userName,
+      password: passWord 
+    }
   }).then(function(res){
-
+    window.location.href = "/login";
   });
 }
 
@@ -54,11 +53,11 @@ function postUser(){
     getMessages();
     getUsers();
     postMessage();
-    $("#message").clear();
+    $("#message").html('');
   }); 
 
 //Grab user name on login page and store it using localStorage (maybe use css to make it hidden on chat.html page if need be)
-let username = $("#username").val().trim();
+let username = $("#username").val();
 
 $("#loginSubmit").on("click", function() {
     localStorage.clear();
@@ -69,12 +68,8 @@ $("#loginSubmit").on("click", function() {
 $('#guest').on('click', function(){
   let number = Math.floor((Math.random() * 9999) + 1)
   username = "anonymous" + number;
-  $.ajax({
-    url: '/',
-    type: "GET"
-  }).then(function(){
-    window.location.href = "/chat";
-  });
+  localStorage.setItem("username", username);
+  window.location.href = "/chat";
 });
 
 //Goes to index.html
@@ -94,9 +89,9 @@ $(".delete-user").on("click", function(){
 });
 
 //Create New User
-$("#createNewUser").on("click", function(){
+$("#createNewUser").on("click", function(e){
+  e.preventDefault();
   postUser();
-  window.location.href = "/login";
 });
 
 });
