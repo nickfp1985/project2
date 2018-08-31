@@ -1,6 +1,7 @@
 $(document).ready(function() {
   setInterval(getMessages, 2000);
   setInterval(getUsers, 2000);
+  let usersArr = [];
 
   //Utils
  function getMessages(){
@@ -16,13 +17,18 @@ $(document).ready(function() {
  }
 
  function getUsers(){
-  $("#activeUsers").empty()
   $.ajax({
    url: "/api/users",
    type: "GET"
  }).then(function(res) {
    res.forEach(function(users){
-    $("#activeUsers").append(`<li>${users.username}</li>`);
+    usersArr.push(users.username);
+    return usersArr;
+   });
+   let reducedUsers = new Set(usersArr);
+   reducedUsers.forEach(function(user){
+     console.log(user);
+     $("#activeUsers").empty().append(`<li>${user}</li>`);
    });
  });
 }
