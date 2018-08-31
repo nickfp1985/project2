@@ -21,7 +21,6 @@ $(document).ready(function() {
    url: "/api/users",
    type: "GET"
  }).then(function(res) {
-   console.log(res);
    res.forEach(function(users){
     $("#activeUsers").append(`<li>${users.username}</li>`);
    });
