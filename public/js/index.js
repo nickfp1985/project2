@@ -17,6 +17,7 @@ $(document).ready(function() {
  }
 
  function getUsers(){
+  $("#activeUsers").empty();
   $.ajax({
    url: "/api/users",
    type: "GET"
@@ -28,7 +29,7 @@ $(document).ready(function() {
    let reducedUsers = new Set(usersArr);
    reducedUsers.forEach(function(user){
      console.log(user);
-     $("#activeUsers").empty().append(`<li>${user}</li>`);
+     $("#activeUsers").append(`<li>${user}</li>`);
    });
  });
 }
