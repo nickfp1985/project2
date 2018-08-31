@@ -20,7 +20,8 @@ $(document).ready(function() {
    url: "/api/users",
    type: "GET"
  }).then(function(res) {
-   res.forEach(users => {
+   console.log(res);
+   res.forEach(function(users){
     $("#activeUsers").append(`<li>${users.username} <button class="btn btn-danger delete-user"</li>`);
    });
  });
