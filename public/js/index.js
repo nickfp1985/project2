@@ -1,6 +1,6 @@
 $(document).ready(function() {
   setInterval(getMessages, 2000);
-  getUsers();
+  setInterval(getUsers, 2000);
 
   //Utils
  function getMessages(){
@@ -16,13 +16,14 @@ $(document).ready(function() {
  }
 
  function getUsers(){
+  $("#activeUsers").empty()
   $.ajax({
    url: "/api/users",
    type: "GET"
  }).then(function(res) {
    console.log(res);
    res.forEach(function(users){
-    $("#activeUsers").append(`<li>${users.username} <button class="btn btn-danger delete-user"</li>`);
+    $("#activeUsers").append(`<li>${users.username}</li>`);
    });
  });
 }
