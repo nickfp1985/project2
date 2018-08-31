@@ -3,15 +3,12 @@ var db = require("../models");
 module.exports = function(app) {
   // Get all examples
   app.get("/api/messages", function(req, res) {
-
-    let msgQuery = {};
-
     db.Message.findAll({
-      where: msgQuery
+      limit: 10,
+      order: [["createdAt", "ASC"]]
     }).then(function(chitchat) {
       res.json(chitchat);
     });
-
   });
 
   // Create a new example
@@ -23,9 +20,40 @@ module.exports = function(app) {
 
   // Delete an example by id
   // app.delete("/api/examples/:id", function(req, res) {
-    
   //   });
   // });
+
+  app.get("/api/users", function(req, res) {
+    // Here we add an "include" property to our options in our findAll query
+    // We set the value to an array of the models we want to include in a left outer join
+    // In this case, just db.Post
+    db.Message.findAll({}).then(function(dbUser) {
+      res.json(dbUser);
+    });
+  });
+
+  app.get("/api/users/:id", function(req, res) {
+    // Here we add an "include" property to our options in our findOne query
+    // We set the value to an array of the models we want to include in a left outer join
+    // In this case, just db.Post
+    db.Message.findOne({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(dbUser) {
+      res.json(dbUser);
+    });
+  });
+
+  app.delete("/api/users/:id", function(req, res) {
+    db.Message.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(function(dbUser) {
+      res.json(dbUser);
+    });
+  });
 };
 
 // POSSIBLE ADDITIONS

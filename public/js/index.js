@@ -1,11 +1,17 @@
 $(document).ready(function() {
-//Utils
+  setInterval(getMessages, 2000);
+  getUsers();
+
+  //Utils
  function getMessages(){
+  $("#sentMessages").empty();
    $.ajax({
     url: "/api/messages",
     type: "GET"
   }).then(function(res) {
-    $("#sentMessages").html().append(`<p>${res.text}</p>`);
+    res.forEach(function(message){
+      $("#sentMessages").append(`<p>${message.username}: ${message.text}</p>`);
+    });
   });
  }
 
@@ -14,51 +20,14 @@ $(document).ready(function() {
    url: "/api/users",
    type: "GET"
  }).then(function(res) {
-   let id = res.id;
    res.forEach(users => {
-    $("#activeUsers").html().append(`<li>${users.name} <button class="btn btn-danger delete-user" id="${users.id}">x</button></li>`);
+    $("#activeUsers").append(`<li>${users.username} <button class="btn btn-danger delete-user"</li>`);
    });
  });
 }
 
-function postMessage(){
-  let message = $("#message").val();
-  $.ajax({
-    url: "/api/message",
-    type: "POST",
-    data: message
-  }).then(function(res){
-
-  })
-}
-
-function postUser(){
-  let userName = $("#newUsername").val().trim();
-  let passWord = $("#newUserPassword").val().trim();
-  let user = {
-    username: userName,
-    password: passWord 
-  };
-
-  $.ajax({
-    url: "/app/users",
-    type: "POST",
-    data: user
-  }).then(function(res){
-
-  });
-}
-
-  //GET all messages when user clicks send
-  $("#send").on("click", function() {
-    getMessages();
-    getUsers();
-    postMessage();
-    $("#message").clear();
-  }); 
-
 //Grab user name on login page and store it using localStorage (maybe use css to make it hidden on chat.html page if need be)
-let username = $("#username").val().trim();
+let username = $("#username").val();
 
 $("#loginSubmit").on("click", function() {
     localStorage.clear();
@@ -69,14 +38,47 @@ $("#loginSubmit").on("click", function() {
 $('#guest').on('click', function(){
   let number = Math.floor((Math.random() * 9999) + 1)
   username = "anonymous" + number;
-  $.ajax({
-    url: '/',
-    type: "GET"
-  }).then(function(){
-    window.location.href = "/chat";
-  });
+  localStorage.setItem("username", username);
+  window.location.href = "/chat";
 });
 
+function postMessage(){
+  let message = $("#message").val();
+  let username = localStorage.getItem("username");
+  $.ajax({
+    url: "/api/message",
+    type: "POST",
+    data: {
+      text: message,
+      username: username
+    }
+  }).then(function(){
+    getMessages();
+  });
+}
+
+function postUser(){
+  let userName = $("#newUserName").val();
+  let passWord = $("#newUserPassword").val();
+
+  $.ajax({
+    url: "/api/users",
+    type: "POST",
+    data: {
+      username: userName,
+      password: passWord 
+    }
+  }).then(function(res){
+    window.location.href = "/login";
+  });
+}
+
+  //GET all messages when user clicks send
+  $("#send").on("click", function() {
+    postMessage();
+    $("#message").val('');
+  }); 
+  
 //Goes to index.html
 $("#home").on('click', function(){
   $.ajax({
@@ -94,108 +96,9 @@ $(".delete-user").on("click", function(){
 });
 
 //Create New User
-$("#createNewUser").on("click", function(){
+$("#createNewUser").on("click", function(e){
+  e.preventDefault();
   postUser();
-  window.location.href = "/login";
 });
 
 });
-// // Get references to page elements
-// var $exampleText = $("#example-text");
-// var $exampleDescription = $("#example-description");
-// var $submitBtn = $("#submit");
-// var $exampleList = $("#example-list");
-
-// // The API object contains methods for each kind of request we'll make
-// var API = {
-//   saveExample: function(example) {
-//     return $.ajax({
-//       headers: {
-//         "Content-Type": "application/json"
-//       },
-//       type: "POST",
-//       url: "api/examples",
-//       data: JSON.stringify(example)
-//     });
-//   },
-//   getExamples: function() {
-//     return $.ajax({
-//       url: "api/examples",
-//       type: "GET"
-//     });
-//   },
-//   deleteExample: function(id) {
-//     return $.ajax({
-//       url: "api/examples/" + id,
-//       type: "DELETE"
-//     });
-//   }
-// };
-
-// // refreshExamples gets new examples from the db and repopulates the list
-// var refreshExamples = function() {
-//   API.getExamples().then(function(data) {
-//     var $examples = data.map(function(example) {
-//       var $a = $("<a>")
-//         .text(example.text)
-//         .attr("href", "/example/" + example.id);
-
-//       var $li = $("<li>")
-//         .attr({
-//           class: "list-group-item",
-//           "data-id": example.id
-//         })
-//         .append($a);
-
-//       var $button = $("<button>")
-//         .addClass("btn btn-danger float-right delete")
-//         .text("ｘ");
-
-//       $li.append($button);
-
-//       return $li;
-//     });
-
-//     $exampleList.empty();
-//     $exampleList.append($examples);
-//   });
-// };
-
-// // handleFormSubmit is called whenever we submit a new example
-// // Save the new example to the db and refresh the list
-// var handleFormSubmit = function(event) {
-//   event.preventDefault();
-
-//   var example = {
-//     text: $exampleText.val().trim(),
-//     description: $exampleDescription.val().trim()
-//   };
-
-//   if (!(example.text && example.description)) {
-//     alert("You must enter an example text and description!");
-//     return;
-//   }
-
-//   API.saveExample(example).then(function() {
-//     refreshExamples();
-//   });
-
-//   $exampleText.val("");
-//   $exampleDescription.val("");
-// };
-
-// // handleDeleteBtnClick is called when an example's delete button is clicked
-// // Remove the example from the db and refresh the list
-// var handleDeleteBtnClick = function() {
-//   var idToDelete = $(this)
-//     .parent()
-//     .attr("data-id");
-
-//   API.deleteExample(idToDelete).then(function() {
-//     refreshExamples();
-//   });
-// };
-
-// // Add event listeners to the submit and delete buttons
-// $submitBtn.on("click", handleFormSubmit);
-// $exampleList.on("click", ".delete", handleDeleteBtnClick);
