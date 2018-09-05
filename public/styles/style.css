@@ -31,3 +31,9 @@
 .Scroll {
     overflow-y: scroll;
 }
+
+.created-at{
+    font-size: 8px;
+    font-style: italic;
+    color: grey;
+}
