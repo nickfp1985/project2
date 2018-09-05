@@ -4,7 +4,6 @@ module.exports = function(app) {
   // Get all examples
   app.get("/api/messages", function(req, res) {
     db.Message.findAll({
-      limit: 10,
       order: [["createdAt", "ASC"]]
     }).then(function(chitchat) {
       res.json(chitchat);

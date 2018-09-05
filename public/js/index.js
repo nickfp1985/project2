@@ -11,7 +11,7 @@ $(document).ready(function() {
     type: "GET"
   }).then(function(res) {
     res.forEach(function(message){
-      $("#sentMessages").append(`<p>${message.username}: ${message.text}</p>`);
+      $("#sentMessages").append(`<p>${message.username}: ${message.text}  <span class="created-at">Message Sent: ${message.createdAt}</span></p>`);
     });
   });
  }
